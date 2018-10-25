@@ -1,0 +1,23 @@
+{{#each instructors}}
+
+    <p>Instructor: {{name}}</p>
+    
+    <img src = "{{image}}"/>
+    
+    <p>Start year: {{startYear}}</p>
+    
+    <p>Rate: amount: {{rate.amout}}, minutes: {{rate.minutes}}</p>
+    
+    <p>Bio: {{bio}}</p>
+
+    <p>Instruments: 
+         {{#each instruments}}
+        <p>{{name}}</p>
+    {{/each}}
+    </p>
+   
+   <p>
+       <a href="/lessons/schedule/{{id}}">Book A Lesson</a>
+   </p>
+    
+{{/each}}

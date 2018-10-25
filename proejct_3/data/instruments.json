@@ -1,0 +1,42 @@
+[
+    {
+        "code": "acoustic-guitar",
+        "name": "Acoustic Guitar"
+    },
+    {
+        "code": "banjo",
+        "name": "Banjo"
+    },
+    {
+        "code": "bass-guitar",
+        "name": "Bass Guitar"
+    },
+    {
+        "code": "drums",
+        "name": "Drums"
+    },
+    {
+        "code": "electric-guitar",
+        "name": "Electric Guitar"
+    },
+    {
+        "code": "flute",
+        "name": "Flute"
+    },
+    {
+        "code": "mandolin",
+        "name": "Mandolin"
+    },
+    {
+        "code": "piano",
+        "name": "Piano"
+    },
+    {
+        "code": "saxophone",
+        "name": "Saxophone"
+    },
+    {
+        "code": "violin",
+        "name": "Violin"
+    }
+]

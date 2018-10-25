@@ -1,0 +1,156 @@
+[
+    {
+        "id": 1,
+        "name": "Mike Mitchell",
+        "image": "https://www.lessonface.com/sites/default/files/styles/lesson_product_page/public/individual-lessons/miketeachingenroute.jpg",
+        "startYear": 2014,
+        "rate": {"amount": 35, "minutes": 30},
+        "bio": "Mike Mitchell makes his home in Floyd, VA where he is founder and director of The Floyd Music School.   He tours nationally with the Mike Mitchell Band, and plays in regional Jazz and Classical ensembles.  Mike is also a session musician at the Windfall and Blackwater recording studios in Virginia.",
+        "instruments": [
+            {
+                "code": "acoustic-guitar",
+                "name": "Acoustic Guitar"
+            },
+            {
+                "code": "banjo",
+                "name": "Banjo"
+            },
+            {
+                "code": "mandolin",
+                "name": "Mandolin"
+            }
+        ]
+    },
+    {
+        "id": 2,
+        "name": "Yonit Spiegelman",
+        "image": "https://www.lessonface.com/sites/default/files/styles/lesson_product_page/public/screenshot2018-03-31at32242pm.png",
+        "startYear": 2014,
+        "rate": {"amount": 55, "minutes": 30},
+        "bio": "Bassist, composer, guitarist, vocalist and producer Yonit Spiegelman had performed on stages across the world including Israel, UK, Austria, France, Belgium, across Canada and the US,   sharing stage with Paul Simon and Valerie Simpson and recordings for Spanish multi Latin Grammy winner  producer Javier Limon.",
+        "instruments": [
+            {
+                "code": "bass-guitar",
+                "name": "Bass Guitar"
+            }
+        ]
+    },
+    {
+        "id": 3,
+        "name": "Leah Kruszewski",
+        "image": "https://www.lessonface.com/sites/default/files/styles/lesson_product_page/public/profile1.jpg",
+        "startYear": 2015,
+        "rate": {"amount": 30, "minutes": 30},
+        "bio": "Flamenco and classical guitarist Leah Kruszewski loves introducing young beginners to their first songs, helping adult students rediscover their inner musician, and guiding classical and flamenco players in advanced, specialized study.   Leah currently accompanies flamenco singers and dancers in  Seville, Spain and travels regularly to the USA for festivals and performances.",
+        "instruments": [
+            {
+                "code": "acoustic-guitar",
+                "name": "Acoustic Guitar"
+            }
+        ]
+    },
+    {
+        "id": 4,
+        "name": "Tanya Svec",
+        "image": "https://www.lessonface.com/sites/default/files/styles/lesson_product_page/public/img2526.jpg",
+        "startYear": 2015,
+        "rate": {"amount": 28, "minutes": 30},
+        "bio": "Ms. Svec has performed professionally and served as director for various wind symphonies, orchestras, schools, and churches.  She owns and operates Svec Music Studio (started 2004), where the goal is to ensure complete music literacy, and to provide quality, advanced music instruction to those serious students striving for excellence in education.",
+        "instruments": [
+            {
+                "code": "flute",
+                "name": "Flute"
+            },
+            {
+                "code": "piano",
+                "name": "Piano"
+            },
+            {
+                "code": "violin",
+                "name": "Violin"
+            }
+        ]
+    },
+    {
+        "id": 5,
+        "name": "Ray Suhy",
+        "image": "https://www.lessonface.com/sites/default/files/styles/lesson_product_page/public/ray3x2.jpg",
+        "startYear": 2014,
+        "rate": {"amount": 30, "minutes": 30},
+        "bio": "I have been teaching guitar for over 25 years. I started teaching almost as soon as I began playing as I wanted to make music with my friends. I grew up playing classic rock and metal and gravitated towards jazz in my teen years. I attended Berklee College Of Music and The New School Jazz Program. I also studied jazz improvisation and theory privately with Charlie Banacos for 10 years.",
+        "instruments": [
+            {
+                "code": "acoustic-guitar",
+                "name": "Acoustic Guitar"
+            },
+            {
+                "code": "electric-guitar",
+                "name": "Electric Guitar"
+            }
+        ]
+    },
+    {
+        "id": 6,
+        "name": "Larry Salzman",
+        "image": "https://www.lessonface.com/sites/default/files/styles/lesson_product_page/public/LarrySalzman.jpg",
+        "startYear": 2015,
+        "rate": {"amount": 35, "minutes": 30},
+        "bio": "Hello, my name is Larry Salzman. I have been teaching private lessons on hand percussion and drum set for over twenty years. I offer lessons at all skill levels, from total beginners to advanced players. I am a global teacher with students across North America and Europe.",
+        "instruments": [
+            {
+                "code": "drums",
+                "name": "Drums"
+            }
+        ]
+    },
+    {
+        "id": 7,
+        "name": "Andres Fonseca",
+        "image": "https://www.lessonface.com/sites/default/files/styles/lesson_product_page/public/andres.jpg",
+        "startYear": 2018,
+        "rate": {"amount": 30, "minutes": 30},
+        "bio": "Andrés’ unique voice--in both drums and his own compositions--blends the sound and tonalities of modern jazz with traditional Latin music. His work interweaves traditional, ancestral, specifically Colombian music, with modern drumset and its evolution mainly through jazz and contemporary music.",
+        "instruments": [
+            {
+                "code": "drums",
+                "name": "Drums"
+            },
+            {
+                "code": "piano",
+                "name": "Piano"
+            }
+        ]
+    },
+    {
+        "id": 8,
+        "name": "Timothy Veeder",
+        "image": "https://www.lessonface.com/sites/default/files/styles/lesson_product_page/public/1_1.jpg",
+        "startYear": 2018,
+        "rate": {"amount": 35, "minutes": 30},
+        "bio": "Tim Veeder is a professional saxophonist, clarinetist, flautist, composer, arranger and educator based in the New York, NY area.",
+        "instruments": [
+            {
+                "code": "flute",
+                "name": "Flute"
+            },
+            {
+                "code": "saxophone",
+                "name": "Saxophone"
+            }
+        ]
+    },
+    {
+        "id": 9,
+        "name": "Willem Moolenbeek",
+        "image": "https://www.lessonface.com/sites/default/files/user/6839/field_photos/soloing_with_band.jpg",
+        "startYear": 2016,
+        "rate": {"amount": 35, "minutes": 30},
+        "bio": "Willem Moolenbeek has performed across Canada as soloist with orchestras and bands, in recital and pop groups. He currently teaches saxophone at the University of Waterloo in Ontario, Canada and is an artist/clinician for Jupiter Instruments and Vandoren reeds.",
+        "instruments": [
+            {
+                "code": "saxophone",
+                "name": "Saxophone"
+            }
+        ]
+    }
+]

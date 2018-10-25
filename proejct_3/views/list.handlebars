@@ -1,0 +1,17 @@
+{{#if appointment}}   
+    {{#each appointment}}
+    
+        <p>Name: {{name}}</p>
+        <p>Email: {{email}}</p>
+        <p>Phone numebr: {{phone}}</p>
+        <p>Time: {{day_time}}</p>
+        <p>Comments: {{comments}}</p>
+        <p>---------------------------------------------</p>
+    
+    {{/each}}
+    <a href="/">Go Home</a>
+
+{{else}}
+        <p>There is no appointment scheduled yet.</p>
+        <a href="/">Go Home</a>
+{{/if}}
