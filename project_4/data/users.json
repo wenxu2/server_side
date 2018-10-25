@@ -1,0 +1,38 @@
+{
+    "pmatthews": {
+        "username": "pmatthews",
+        "password": "$2b$10$IO3LLZs6Zkc8czE7E0o4l.EERL1PtOV5CbjqESoXsBWnkdWu8A0AW",
+        "firstname": "Pete",
+        "lastname": "Matthews",
+        "email": "pwm14@cox.net",
+        "admin": false,
+        "instrument": "acoustic-guitar"
+    },
+    "japple": {
+        "username": "japple",
+        "password": "$2b$10$IO3LLZs6Zkc8czE7E0o4l.EERL1PtOV5CbjqESoXsBWnkdWu8A0AW",
+        "firstname": "James",
+        "lastname": "Apple",
+        "email": "japple92@gmail.com",
+        "admin": false,
+        "instrument": "flute"
+    },
+    "creynolds": {
+        "username": "creynolds",
+        "password": "$2b$10$IO3LLZs6Zkc8czE7E0o4l.EERL1PtOV5CbjqESoXsBWnkdWu8A0AW",
+        "firstname": "Cassi",
+        "lastname": "Reynolds",
+        "email": "trumpetfan@gmail.com",
+        "admin": false,
+        "instrument": "trumpet"
+    },
+    "yspiegelman": {
+        "username": "yspiegelman",
+        "password": "$2b$10$IO3LLZs6Zkc8czE7E0o4l.EERL1PtOV5CbjqESoXsBWnkdWu8A0AW",
+        "firstname": "Yonit",
+        "lastname": "Spiegelman",
+        "email": "admin@lessonface.com",
+        "admin": true,
+        "instrument": "acoustic-guitar"
+    }
+}
