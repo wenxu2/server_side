@@ -23,16 +23,39 @@ app.set('port', process.env.PORT || 3000);
 
 app.use(express.static(__dirname + '/public'));
 
+//database connection
+const mongoose = require('mongoose');
+mongoose.connect('mongodb://user1:a12345@ds163330.mlab.com:63330/project6');
+
+//Open the conenction
+/*let db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function() {
+  console.log("worked");
+});*/
+
+
+//mongodb://user1:a12345@ds163330.mlab.com:63330/project6
+
+
 // Login screen should display the form
 app.get('/', function(req, res) {
 	// Render the login screen.  Any problem passed into the query string will be available to the template.
 	res.render("login", {problem: req.query.problem});
 });
 
+
 //after login
 app.get('/table', function(req,res){
 	res.render('table');
 });
+
+
+//after the user click view button
+app.get('/detail', function(req,res){
+	res.render('detail');
+});
+
 
 // 404 catch-all handler (middleware)
 app.use(function(req, res, next){
