@@ -36,9 +36,10 @@ db.once('open', function() {
   console.log("worked");
 });
 
-//
+//user.js
 let user = require('./modules/user');
-
+//quartback.js
+let quarterback = require('./modules/quarterbacks');
 
 // Login screen should display the form
 app.get('/', function(req, res) {
@@ -73,10 +74,45 @@ app.post('/', function(req, res){
 
 });
 
-//add table
+//after login
+app.get('/home', function(req,res){
+
+
+	db.collection('quarterbacks').find().toArray(function(err, results) {
+		//print out what is in the database
+		console.log(results);
+
+		res.render('table', {name: results[0].name});
+
+	});
+
+
+});
+
+
+//display table
 app.get('/add', function(req, res){
 	res.render('add');
 });
+
+//add table
+app.post('/add', function(req, res){
+	
+	let name = req.body.firstname + " " + req.body.lastname;
+	let newQuarterback = new quarterback({name: name, age: req.body.age, hometown: req.body.hometown, school: req.body.school});
+
+	newQuarterback.save().then(function(saved){
+		if(saved)
+		{
+			res.redirect('/home');
+		}
+	
+	});
+
+	
+
+});
+
 
 //update table
 app.get('/update', function(req, res){
@@ -108,17 +144,12 @@ app.post('/signUp', function(req,res){
 
 		newUser.save().then(function(saveUser){
 			//console.log(saveUser.username);
+			res.redirect('/home');
 		
 		});
 
 	  });
 
-});
-
-
-//after login
-app.get('/home', function(req,res){
-	res.render('table');
 });
 
 
