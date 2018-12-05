@@ -77,23 +77,9 @@ app.get('/home', function(req,res){
 	db.collection('quarterbacks').find().toArray(function(err, results) {
 
 		//print out what is in the database
-			console.log(results);
-
-			for(let i = 0; i < results.length; i++)
-			{
-
-				homeArray.push({
-					name: results[i].name,
-					school: results[i].school
-
-				});
-		
-			}
+			console.log(results[0]);
 			
-			console.log(homeArray[0].name);
-			console.log(homeArray[0].school);
-
-			res.render('home', {name: homeArray[0].name});
+			res.render('home', {info: results});
 
 		});
 });
@@ -138,9 +124,6 @@ app.get('/signUp', function(req, res) {
 app.post('/signUp', function(req,res){
 
 	//print what the user ented
-	//console.log(req.body.username);
-	//console.log(req.body.password);
-
 	bcrypt.hash(req.body.password, saltRounds, function(err, hash) {
 		
 		console.log(hash);
@@ -165,8 +148,9 @@ app.get('/detail/:name', function(req,res){
 
 	quarterback.find({name: req.params.name}).then(function(foundUser){
 
-		//console.log(foundUser);
-		res.render('detail', {userinfo:foundUser[0]});
+		console.log(foundUser[0].game[0].opponent);
+
+		res.render('detail', {userinfo:foundUser[0], game: foundUser[0].game});
 
 	});
 
@@ -188,7 +172,7 @@ app.post('/game/:name', function(req, res){
 	console.log("add game for the user");
 	console.log(req.params.name);
 
-	let gameInfo2 = {
+	let gameInfo = {
 				opponent: req.body.opponent,
 				location: req.body.location,
 				date: req.body.date,
@@ -199,15 +183,14 @@ app.post('/game/:name', function(req, res){
 				intetceptions: req.body.interceptions,
 	};
 
-	db.collection('quarterbacks').update({name: req.params.name},{$push: {game: gameInfo2}}, function(err, records){
+	db.collection('quarterbacks').update({name: req.params.name},{$push: {game: gameInfo}}, function(err, records){
 		if (err) throw err;
 		console.log("1 document updated");
+		res.redirect('/game/:name');
 		db.close();
 	});
 
 });
-
-
 
 // 404 catch-all handler (middleware)
 app.use(function(req, res, next){

@@ -9,13 +9,17 @@
                 <th>Comp Ratio</th>
                 <th></th>
             </tr>
-            <tr>
-                <td align="center">{{name}}</td>
-                <td align="center"></td>
-                <td align="center"></td>
-                <td align="center"><a href='/detail/{{name}}'>View</a></td>
-                
-            </tr>
+
+            {{#each info}}
+                <tr>
+                    <td align="center">{{name}}</td>
+                    <td align="center">{{school}}</td>
+                    <td align="center"></td>
+                    <td align="center"><a href='/detail/{{name}}'>View</a></td>
+                    
+                </tr>
+            {{/each}}
+
         </table>
 
         <Button type="submit"><a href='/add'>Add a Quartback </Button>
