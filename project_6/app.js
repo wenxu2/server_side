@@ -188,27 +188,22 @@ app.post('/game/:name', function(req, res){
 	console.log("add game for the user");
 	console.log(req.params.name);
 
-	let gameInfo = {$set: {
-		opponent: req.body.opponent,
-		location: req.body.location,
-		date: req.body.date,
-		completions: req.body.completions,
-		attempts: req.body.attempts,
-		yards: req.body.yards,
-		touchdown: req.body.touchdowns,
-		intetceptions: req.body.interceptions,
-	}};
+	let gameInfo2 = {
+				opponent: req.body.opponent,
+				location: req.body.location,
+				date: req.body.date,
+				completions: req.body.completions,
+				attempts: req.body.attempts,
+				yards: req.body.yards,
+				touchdown: req.body.touchdowns,
+				intetceptions: req.body.interceptions,
+	};
 
-
-	let existquartback = new quarterback({name: req.params.name});
-
-	db.collection('quarterbacks').updateOne(existquartback, gameInfo, function(err, records){
+	db.collection('quarterbacks').update({name: req.params.name},{$push: {game: gameInfo2}}, function(err, records){
 		if (err) throw err;
 		console.log("1 document updated");
 		db.close();
-
 	});
-
 
 });
 
