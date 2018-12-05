@@ -4,6 +4,8 @@ const bcrypt = require('bcryptjs');
 const bodyParser = require("body-parser");
 const session = require('express-session');
 
+const saltRounds = 10;
+
 // Data structure to track the lessons taken by users
 let lessonTracker = {};
 
@@ -28,14 +30,14 @@ const mongoose = require('mongoose');
 mongoose.connect('mongodb://user1:a12345@ds163330.mlab.com:63330/project6');
 
 //Open the conenction
-/*let db = mongoose.connection;
+let db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
   console.log("worked");
-});*/
+});
 
-
-//mongodb://user1:a12345@ds163330.mlab.com:63330/project6
+//
+let user = require('./modules/user');
 
 
 // Login screen should display the form
@@ -44,9 +46,63 @@ app.get('/', function(req, res) {
 	res.render("login", {problem: req.query.problem});
 });
 
+//User
+app.post('/', function(req, res){
+	
+	//print what the user ented
+	//let userLogin = new user({username: req.body.username, password: req.body.password});
+	
+	user.findOne({username: req.body.username}).exec(function(err, loginuser){
+
+			if(loginuser)
+			{
+				console.log(loginuser.password);
+				console.log(req.body.password);
+				
+				bcrypt.compare(req.body.password,loginuser.password, function(err, result){
+				
+					if(result === true)
+					{
+						console.log("User login successfully");
+						res.redirect('/home');
+					}
+				});
+		}
+
+	});
+
+});
+
+// Login screen should display the form
+app.get('/signUp', function(req, res) {
+	res.render("signUp");
+});
+
+//save user info to database
+app.post('/signUp', function(req,res){
+
+	//print what the user ented
+	//console.log(req.body.username);
+	//console.log(req.body.password);
+
+	bcrypt.hash(req.body.password, saltRounds, function(err, hash) {
+		
+		console.log(hash);
+
+		let newUser = new user({username: req.body.username, password: hash});
+
+		newUser.save().then(function(saveUser){
+			//console.log(saveUser.username);
+		
+		});
+
+	  });
+
+});
+
 
 //after login
-app.get('/table', function(req,res){
+app.get('/home', function(req,res){
 	res.render('table');
 });
 

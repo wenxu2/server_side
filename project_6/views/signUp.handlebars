@@ -1,13 +1,8 @@
-{{#if problem}}
-<h5 style="color: red;">
-    There was an error with your {{problem}}.  Please try again.
-</h5>
-{{/if}}
 
-<form method="post" action="/">
+<form method="post" action="/signUp">
 
     <fieldset>
-        <legend>Login</legend>
+        <legend>Sign Up</legend>
     
         <div>
             <label for="username">Username:</label>
@@ -21,12 +16,11 @@
                    minlength="8" required
                    placeholder="8 characters minimum" />
         </div>
-    
-        <input type="submit" value="Sign in">
 
-        <p>Don't have an account?  Sign up <a href="/signUp">here</a> </p>
-       
+        <input type="submit" value="SignUp">
+
+        <p>Already have an account?   Login <a href="/">here</a> </p>
     
     </fieldset>
-
+    
 </form>
