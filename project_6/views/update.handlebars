@@ -1,0 +1,74 @@
+<form method="post" action"/update">
+     <fieldset>
+        <h3>Edit Quarterbacks</h3>
+        <h4>Edit an quarterback to the list of candidates</h4>
+
+        <div>
+            <label for="name">FirstName:</label>
+            <input type="text" id="firstname" name="username"
+                   required />
+            <input type="text" id="lastname" name="lastname"
+                   required />
+        </div>
+
+        <div>
+            <label for="age">Age:</label>
+            <input type="text" id="age" name="age"
+                   required />
+        </div>
+
+        <div>
+            <label for="hometown">Username:</label>
+            <input type="text" id="hometown" name="hometown"
+                   required />
+        </div>
+
+        <div>
+            <label for="school">School:  </label>
+            <input type="text" id="school" name="school"
+                   required />
+        </div>
+       
+
+        <Button class="delete">Delete</Button>
+        <Button type="submit">Update</Button>
+  
+   </fieldset>
+
+    <style>
+        
+        input[type=text] {
+            width: 50%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            box-sizing: border-box;
+        }
+
+        button{
+            background-color: #008CBA;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+
+        button.delete{
+            background-color: red;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+    </style>
+</form>
+

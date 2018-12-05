@@ -46,7 +46,7 @@ app.get('/', function(req, res) {
 	res.render("login", {problem: req.query.problem});
 });
 
-//User
+//Authericate user
 app.post('/', function(req, res){
 	
 	//print what the user ented
@@ -71,6 +71,21 @@ app.post('/', function(req, res){
 
 	});
 
+});
+
+//add table
+app.get('/add', function(req, res){
+	res.render('add');
+});
+
+//update table
+app.get('/update', function(req, res){
+	res.render('update');
+});
+
+//update table
+app.get('/game', function(req, res){
+	res.render('add_edit_game');
 });
 
 // Login screen should display the form
