@@ -74,31 +74,28 @@ app.post('/', function(req, res){
 //after login
 app.get('/home', function(req,res){
 
-
 	db.collection('quarterbacks').find().toArray(function(err, results) {
+
 		//print out what is in the database
-		console.log(results);
+			console.log(results);
 
-		for(let i = 0; i < results.length; i++)
-		{
+			for(let i = 0; i < results.length; i++)
+			{
 
-			homeArray.push({
+				homeArray.push({
+					name: results[i].name,
+					school: results[i].school
 
-				name: results[i].name,
-				school: results[i].school
-
-			});
-	
-		}
+				});
 		
-		console.log(homeArray[0].name);
-		console.log(homeArray[0].school);
+			}
+			
+			console.log(homeArray[0].name);
+			console.log(homeArray[0].school);
 
-		res.render('home', {name: homeArray[0].name});
+			res.render('home', {name: homeArray[0].name});
 
-	});
-
-
+		});
 });
 
 
@@ -131,10 +128,6 @@ app.get('/update', function(req, res){
 	res.render('update');
 });
 
-//update table
-app.get('/game', function(req, res){
-	res.render('add_edit_game');
-});
 
 // Login screen should display the form
 app.get('/signUp', function(req, res) {
@@ -172,15 +165,53 @@ app.get('/detail/:name', function(req,res){
 
 	quarterback.find({name: req.params.name}).then(function(foundUser){
 
-		console.log(foundUser);
-		res.render('detail', {name:homeArray[0].name});
+		//console.log(foundUser);
+		res.render('detail', {userinfo:foundUser[0]});
 
 	});
 
-	/*let username = req.param.name;
-	console.log("username is " + username);
-	*/
 });
+
+
+//update table
+app.get('/game/:name', function(req, res){
+
+	console.log("add game for the user");
+	console.log(req.params.name);
+
+	res.render('add_edit_game');
+});
+
+//add game
+app.post('/game/:name', function(req, res){
+
+	console.log("add game for the user");
+	console.log(req.params.name);
+
+	let gameInfo = {$set: {
+		opponent: req.body.opponent,
+		location: req.body.location,
+		date: req.body.date,
+		completions: req.body.completions,
+		attempts: req.body.attempts,
+		yards: req.body.yards,
+		touchdown: req.body.touchdowns,
+		intetceptions: req.body.interceptions,
+	}};
+
+
+	let existquartback = new quarterback({name: req.params.name});
+
+	db.collection('quarterbacks').updateOne(existquartback, gameInfo, function(err, records){
+		if (err) throw err;
+		console.log("1 document updated");
+		db.close();
+
+	});
+
+
+});
+
 
 
 // 404 catch-all handler (middleware)

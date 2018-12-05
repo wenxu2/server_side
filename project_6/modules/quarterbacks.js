@@ -16,7 +16,6 @@ let quarterbacksSchema = new mongoose.Schema({
       interceptions: String
      
     }]
-
   });
 
 let quarterbacks = mongoose.model('quarterbacks', quarterbacksSchema);

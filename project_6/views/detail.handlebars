@@ -28,10 +28,12 @@
 
         </table>
 
-        <h2><b>{{info.name}}</b></h2>
-        <p>Age: {{info.age}}</p>
-        <p>Hometown: {{info.homwtown}}</p>
-        <p>School: {{info.school}}</p>
+        {{#if userinfo}}
+            <h2><b>{{userinfo.name}}</b></h2>
+            <p><b>Age:  </b>{{userinfo.age}}</p>
+            <p><b>Hometown:  </b>{{userinfo.hometown}}</p>
+            <p><b>School:  </b>{{userinfo.school}}</p>
+        {{/if}}
 
         </fieldset>
 
@@ -41,11 +43,13 @@
                 <th>Opponent</th>
                 <th>Location</th> 
                 <th>Date</th>
-                <th>Edit</th>
+                <th>    </th>
             </tr>
         </table>
+        
+        <Button type="submit"><a href='/game/{{userinfo.name}}'>Add Game</Button>
 
-        <Button>Add Game</Button>
+
    </fieldset>
 
     <style>
