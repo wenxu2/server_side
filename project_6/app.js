@@ -6,9 +6,6 @@ const session = require('express-session');
 
 const saltRounds = 10;
 
-// Data structure to track the lessons taken by users
-let lessonTracker = {};
-
 // This is our app
 let app = express();
 
@@ -24,6 +21,9 @@ app.set('view engine', 'handlebars');
 app.set('port', process.env.PORT || 3000);
 
 app.use(express.static(__dirname + '/public'));
+
+//declear array
+let homeArray = [];
 
 //database connection
 const mongoose = require('mongoose');
@@ -49,10 +49,7 @@ app.get('/', function(req, res) {
 
 //Authericate user
 app.post('/', function(req, res){
-	
-	//print what the user ented
-	//let userLogin = new user({username: req.body.username, password: req.body.password});
-	
+
 	user.findOne({username: req.body.username}).exec(function(err, loginuser){
 
 			if(loginuser)
@@ -82,7 +79,22 @@ app.get('/home', function(req,res){
 		//print out what is in the database
 		console.log(results);
 
-		res.render('table', {name: results[0].name});
+		for(let i = 0; i < results.length; i++)
+		{
+
+			homeArray.push({
+
+				name: results[i].name,
+				school: results[i].school
+
+			});
+	
+		}
+		
+		console.log(homeArray[0].name);
+		console.log(homeArray[0].school);
+
+		res.render('home', {name: homeArray[0].name});
 
 	});
 
@@ -154,8 +166,20 @@ app.post('/signUp', function(req,res){
 
 
 //after the user click view button
-app.get('/detail', function(req,res){
-	res.render('detail');
+app.get('/detail/:name', function(req,res){
+	
+	console.log(req.params.name);
+
+	quarterback.find({name: req.params.name}).then(function(foundUser){
+
+		console.log(foundUser);
+		res.render('detail', {name:homeArray[0].name});
+
+	});
+
+	/*let username = req.param.name;
+	console.log("username is " + username);
+	*/
 });
 
 
