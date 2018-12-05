@@ -41,16 +41,18 @@
                 <th>Opponent</th>
                 <th>Location</th> 
                 <th>Date</th>
-                <th>    </th>
+                <th> </th>
             </tr>
             
-            {{#each game}}
-                <tr align="center">
-                <td>{{opponent}}</td>
-                <td>{{location}}</td>
-                <td>{{date}}</td>
-                <td><a href='/update/{{name}}'>Edit</td>
-                </tr>
+            {{#each userinfo}}
+                {{#each game}}
+                    <tr align="center">
+                        <td>{{opponent}}</td>
+                        <td>{{location}}</td>
+                        <td>{{date}}</td>
+                        <td><a href='/update/{{userinfo.name}}'>Edit</a></td>
+                    </tr>
+                {{/each}}
             {{/each}}
     
         </table>

@@ -78,7 +78,7 @@ app.get('/home', function(req,res){
 
 		//print out what is in the database
 			console.log(results[0]);
-			
+
 			res.render('home', {info: results});
 
 		});
@@ -108,13 +108,6 @@ app.post('/add', function(req, res){
 
 });
 
-
-//update table
-app.get('/update', function(req, res){
-	res.render('update');
-});
-
-
 // Login screen should display the form
 app.get('/signUp', function(req, res) {
 	res.render("signUp");
@@ -143,14 +136,22 @@ app.post('/signUp', function(req,res){
 
 //after the user click view button
 app.get('/detail/:name', function(req,res){
-	
-	console.log(req.params.name);
 
 	quarterback.find({name: req.params.name}).then(function(foundUser){
 
-		console.log(foundUser[0].game[0].opponent);
+	
+	/*
+	
+	let gameInfo = [];
+	gameInfo.push({
+		name: req.params.name
+	});
+	gameInfo.push(foundUser[0].game);
 
-		res.render('detail', {userinfo:foundUser[0], game: foundUser[0].game});
+	console.log(gameInfo);
+	*/
+
+	 res.render('detail', {userinfo:foundUser[0]});
 
 	});
 
@@ -191,6 +192,16 @@ app.post('/game/:name', function(req, res){
 	});
 
 });
+
+//update table
+app.get('/update/:name', function(req, res){
+
+	console.log("Test");
+	console.log(req.params.name);
+	res.render('update');
+
+});
+
 
 // 404 catch-all handler (middleware)
 app.use(function(req, res, next){
