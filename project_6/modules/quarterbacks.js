@@ -13,8 +13,7 @@ let quarterbacksSchema = new mongoose.Schema({
       attempts: String,
       yards: String,
       touchdowns: String,
-      interceptions: String
-     
+      interceptions: String,
     }]
   });
 

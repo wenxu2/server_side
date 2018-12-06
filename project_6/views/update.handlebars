@@ -1,31 +1,29 @@
-<form method="post" action"/update/">
+<form method="post" action"/update/:name">
      <fieldset>
         <h3>Edit Quarterbacks</h3>
         <h4>Edit an quarterback to the list of candidates</h4>
 
         <div>
-            <label for="name">FirstName:</label>
-            <input type="text" id="firstname" name="username"
-                   required />
-            <input type="text" id="lastname" name="lastname"
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" value="{{userinfo.name}}" 
                    required />
         </div>
 
         <div>
             <label for="age">Age:</label>
-            <input type="text" id="age" name="age"
+            <input type="text" id="age" name="age" value="{{userinfo.age}}"
                    required />
         </div>
 
         <div>
             <label for="hometown">Username:</label>
-            <input type="text" id="hometown" name="hometown"
+            <input type="text" id="hometown" name="hometown" value="{{userinfo.hometown}}"
                    required />
         </div>
 
         <div>
             <label for="school">School:  </label>
-            <input type="text" id="school" name="school"
+            <input type="text" id="school" name="school" value="{{userinfo.school}}"
                    required />
         </div>
        

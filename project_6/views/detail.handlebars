@@ -28,7 +28,7 @@
 
         </table>
 
-        <h2><b>{{userinfo.name}}</b></h2>
+        <h2><b>{{userinfo.name}}</b> <a href="/update/{{userinfo.name}}">Edit</a></h2>
         <p><b>Age:  </b>{{userinfo.age}}</p>
         <p><b>Hometown:  </b>{{userinfo.hometown}}</p>
         <p><b>School:  </b>{{userinfo.school}}</p>
@@ -50,7 +50,7 @@
                         <td>{{opponent}}</td>
                         <td>{{location}}</td>
                         <td>{{date}}</td>
-                        <td><a href='/update/{{userinfo.name}}'>Edit</a></td>
+                        <td><a href=''>Edit</a></td>
                     </tr>
                 {{/each}}
             {{/each}}
