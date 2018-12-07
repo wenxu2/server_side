@@ -226,6 +226,7 @@ app.post('/editgame/:_id', function(req, res) {
 	if(button == 'delete')
 	{
 		console.log('delete button pressed');
+		res.redirect('/home');
 		db.collection('quarterbacks').findOne({_id:quartbackId}, function(err, user){
 
 			let newQuarterback = new quarterback({
@@ -240,11 +241,19 @@ app.post('/editgame/:_id', function(req, res) {
 
 			for(let i = 0; i < newQuarterback.game.length; i++)
 			{
-				
+				if(req.params._id == newQuarterback.game[i]._id)
+				{
+					newQuarterback.game.splice(i,1);
+					break;
+				}
 				
 			}
 
-			console.log(newQuarterback);
+			db.collection('quarterbacks').deleteOne({_id: quartbackId}).then(function(err, result){
+
+				console.log(newQuarterback);
+				newQuarterback.save();
+			});
 		});
 
 	}else if(button == 'update'){
@@ -293,9 +302,6 @@ app.post('/editgame/:_id', function(req, res) {
 
 		
 });
-
-
-
 
 //show quartback info
 app.get('/update/:_id', function(req, res){
