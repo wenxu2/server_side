@@ -100,13 +100,12 @@ app.post('/signUp', function(req,res){
 //after login,
 app.get('/home', function(req,res){
 
-	let crArray = [];
-
 	db.collection('quarterbacks').find().toArray(function(err, results) {
 
 		//print out what is in the database
 		console.log(results);
-		
+		let crArray = [];
+
 		for(let i = 0; i < results.length; i++)
 		{
 			let com = 0;
@@ -119,6 +118,8 @@ app.get('/home', function(req,res){
 			{
 				com += results[i].game[j].completions;
 				att += results[i].game[j].attempts;
+
+				console.log(com + " " + att);
 			}
 
 			if(com == 0 && att == 0)
@@ -126,7 +127,8 @@ app.get('/home', function(req,res){
 				cr = 0;
 
 			}else{
-				cr = Math.ceil(com/att * 100);
+				cr = Math.ceil(com / att * 100);
+				console.log(cr);
 			}
 
 			crArray.push({
@@ -262,11 +264,12 @@ app.post('/addgame/:_id', function(req, res){
 	};
 
 
-	db.collection('quarterbacks').update({_id: req.params._id},{$push: {game: gameInfo}}, function(err, records){
+	db.collection('quarterbacks').updateOne({_id: req.params._id},{$push: {game: gameInfo}}, function(err, records){
 		if (err) throw err;
 
 		console.log(records);
 		res.redirect('/home');
+	
 	});
 	
 
