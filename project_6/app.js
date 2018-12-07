@@ -189,7 +189,7 @@ app.post('/addgame/:_id', function(req, res){
 
 });
 
-//edit game
+//show game
 app.get('/editgame/:gameId', function(req, res){
 
 
@@ -214,52 +214,72 @@ app.get('/editgame/:gameId', function(req, res){
 	
 });
 
-//update the game
+//edit and update the game
 app.post('/editgame/:gameId', function(req, res) {
 			
-	let info = {$set:{
-		opponent: req.body.opponent,
-		location: req.body.location,
-		date: req.body.date,
-		completions: req.body.completions,
-		attempts: req.body.attempts,
-		yards: req.body.yards,
-		touchdown: req.body.touchdowns,
-		intetceptions: req.body.intetceptions
-		}};
-		
-	console.log(info);
 	console.log(req.params.gameId);
-
-	db.collection('quarterbacks').findOne({'game.gameId': req.params.gameId},function(err, game){
-		if(err) throw err;
-		console.log(game);
-		//res.redirect('/home');
-	});
-
-
-	/*
+	console.log(quartbackId);
 
 	db.collection('quarterbacks').findOne({_id:quartbackId}, function(err, user){
-		console.log(user.game);
 		
-		for(let i = 0; i< user.game.length; i++)
+		let newQuarterback = new quarterback({
+			_id: user._id,
+			name: user.name,
+			age: user.age,
+			hometown: user.hometown,
+			school: user.school,
+			game: user.game
+
+		});
+
+		console.log(newQuarterback);
+
+		for(let i = 0; i< newQuarterback.game.length; i++)
 		{
-			if(req.params.gameId == user.game[i].gameId)
+			if(req.params.gameId == newQuarterback.game[i].gameId)
 			{
-				quarterback.findOneAndUpdate({gameId: req.params.gameId}, {game: info},function(err, game){
-					console.log(game);
-					res.redirect('/home');
-				});
+				newQuarterback.game[i].opponent = req.body.opponent;
+				newQuarterback.game[i].location =  req.body.location;
+				newQuarterback.game[i].date = req.body.date;
+				newQuarterback.game[i].completions = req.body.completions;
+				newQuarterback.game[i].attempts =  req.body.attempts;
+				newQuarterback.game[i].yards =  req.body.yards;
+				newQuarterback.game[i].touchdown = req.body.touchdowns;
+				newQuarterback.game[i].intetceptions = req.body.intetceptions;
 				break;
 			}
 		}
+		
+		db.collection('quarterbacks').deleteOne({_id:quartbackId}).then(function(err, res){
+
+			console.log(newQuarterback);
+		
+			newQuarterback.save().then(function(err, res){
+
+			if(err) return console.log(err);
+			console.log(res);
+			res.redirect('/home');
+
+			});
+		});
+		
+		
+	});
+	
+	/*
+	db.collection('quarterbacks').update({_id: quartbackId, 'game.gameId': req.params.gameId},{$set:{game: info}},(err, res) => {
+
+		if(err) return console.error(err);
+
+		console.log(res);
+		console.log("Inserted Successfully");
 
 	});
 	*/
-
+			
+			
+		
 	
-    
 });
 
 
@@ -268,7 +288,8 @@ app.get('/update/:_id', function(req, res){
 
 	console.log(req.params._id);
 	quarterback.findOne({_id: req.params._id}).exec(function(err, userinfo){
-
+		if(err) throw err;
+		//else
 		console.log(userinfo);
 		res.render('update',{userinfo: userinfo});
 	});
