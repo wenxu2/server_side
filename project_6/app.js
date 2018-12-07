@@ -22,8 +22,6 @@ app.set('port', process.env.PORT || 3000);
 
 app.use(express.static(__dirname + '/public'));
 
-//declear array
-let homeArray = [];
 
 //database connection
 const mongoose = require('mongoose');
@@ -35,6 +33,8 @@ db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
   console.log("worked");
 });
+
+let quartbackId = 0;
 
 //user.js
 let user = require('./modules/user');
@@ -71,42 +71,6 @@ app.post('/', function(req, res){
 
 });
 
-//after login
-app.get('/home', function(req,res){
-
-	db.collection('quarterbacks').find().toArray(function(err, results) {
-
-		//print out what is in the database
-		console.log(results);
-		res.render('home', {info: results});
-
-		});
-});
-
-
-//display table
-app.get('/add', function(req, res){
-	res.render('add');
-});
-
-//add table
-app.post('/add', function(req, res){
-	
-	let name = req.body.firstname + " " + req.body.lastname;
-	let newQuarterback = new quarterback({name: name, age: req.body.age, hometown: req.body.hometown, school: req.body.school});
-
-	newQuarterback.save().then(function(saved){
-		if(saved)
-		{
-			res.redirect('/home');
-		}
-	
-	});
-
-	
-
-});
-
 // Login screen should display the form
 app.get('/signUp', function(req, res) {
 	res.render("signUp");
@@ -132,24 +96,52 @@ app.post('/signUp', function(req,res){
 
 });
 
+//after login,
+app.get('/home', function(req,res){
+
+	db.collection('quarterbacks').find().toArray(function(err, results) {
+
+		//print out what is in the database
+		console.log(results);
+		res.render('home', {quarterbacks: results});
+	});
+	
+});
+
+
+//display add quartback layout 
+app.get('/addquarterback', function(req, res){
+	res.render('addquarterback');
+});
+
+//add quartback to the database
+app.post('/addquarterback', function(req, res){
+	
+	let name = req.body.firstname + " " + req.body.lastname;
+	let _id = Math.floor((Math.random() * 1000000000) + 1);
+	console.log(_id);
+	let newQuarterback = new quarterback({_id: _id, name: name, age: req.body.age, hometown: req.body.hometown, school: req.body.school});
+
+	newQuarterback.save().then(function(saved){
+		if(saved)
+		{
+			res.redirect('/home');
+		}
+	
+	});
+
+	
+
+});
 
 //after the user click view button
-app.get('/detail/:name', function(req,res){
+app.get('/detail/:_id', function(req,res){
 
-	quarterback.find({name: req.params.name}).then(function(foundUser){
-
+	console.log(req.params._id);
+	quartbackId = req.params._id;
 	
-	/*
+	quarterback.find({_id: req.params._id}).then(function(foundUser){
 	
-	let gameInfo = [];
-	gameInfo.push({
-		name: req.params.name
-	});
-	gameInfo.push(foundUser[0].game);
-
-	console.log(gameInfo);
-	*/
-
 	 res.render('detail', {userinfo:foundUser[0]});
 
 	});
@@ -157,22 +149,25 @@ app.get('/detail/:name', function(req,res){
 });
 
 
-//update table
-app.get('/game/:name', function(req, res){
+//add game
+app.get('/addgame/:_id', function(req, res){
 
 	console.log("add game for the user");
-	console.log(req.params.name);
+	console.log(req.params._id);
 
-	res.render('add_edit_game');
+	res.render('addgame');
 });
 
 //add game
-app.post('/game/:name', function(req, res){
+app.post('/addgame/:_id', function(req, res){
 
 	console.log("add game for the user");
-	console.log(req.params.name);
+	console.log(req.params._id);
+
+	let gameId = Math.floor((Math.random() * 1000000000) + 1000000000);
 
 	let gameInfo = {
+				gameId: gameId,
 				opponent: req.body.opponent,
 				location: req.body.location,
 				date: req.body.date,
@@ -183,19 +178,96 @@ app.post('/game/:name', function(req, res){
 				intetceptions: req.body.interceptions,
 	};
 
-	db.collection('quarterbacks').update({name: req.params.name},{$push: {game: gameInfo}}, function(err, records){
+
+	db.collection('quarterbacks').update({_id: req.params._id},{$push: {game: gameInfo}}, function(err, records){
 		if (err) throw err;
-		console.log("1 document updated");
-		res.redirect('/game/:name');
-		db.close();
+
+		console.log(records);
+		res.redirect('/home');
 	});
+	
 
 });
 
-//show quartback info
-app.get('/update/:name', function(req, res){
+//edit game
+app.get('/editgame/:gameId', function(req, res){
 
-	quarterback.findOne({name: req.params.name}).exec(function(err, userinfo){
+
+	console.log(req.params.gameId);
+
+	console.log("The id is " + quartbackId);
+	
+	db.collection('quarterbacks').findOne({_id:quartbackId}, function(err, user){
+		
+		//console.log(user.game);
+		
+		for(let i = 0; i< user.game.length; i++)
+		{
+			if(req.params.gameId == user.game[i].gameId)
+			{
+				res.render('editgame', {'game': user.game[i]});
+				break;
+			}
+		}
+
+	});
+	
+});
+
+//update the game
+app.post('/editgame/:gameId', function(req, res) {
+			
+	let info = {$set:{
+		opponent: req.body.opponent,
+		location: req.body.location,
+		date: req.body.date,
+		completions: req.body.completions,
+		attempts: req.body.attempts,
+		yards: req.body.yards,
+		touchdown: req.body.touchdowns,
+		intetceptions: req.body.intetceptions
+		}};
+		
+	console.log(info);
+	console.log(req.params.gameId);
+
+	db.collection('quarterbacks').findOne({'game.gameId': req.params.gameId},function(err, game){
+		if(err) throw err;
+		console.log(game);
+		//res.redirect('/home');
+	});
+
+
+	/*
+
+	db.collection('quarterbacks').findOne({_id:quartbackId}, function(err, user){
+		console.log(user.game);
+		
+		for(let i = 0; i< user.game.length; i++)
+		{
+			if(req.params.gameId == user.game[i].gameId)
+			{
+				quarterback.findOneAndUpdate({gameId: req.params.gameId}, {game: info},function(err, game){
+					console.log(game);
+					res.redirect('/home');
+				});
+				break;
+			}
+		}
+
+	});
+	*/
+
+	
+    
+});
+
+
+//show quartback info
+app.get('/update/:_id', function(req, res){
+
+	console.log(req.params._id);
+	quarterback.findOne({_id: req.params._id}).exec(function(err, userinfo){
 
 		console.log(userinfo);
 		res.render('update',{userinfo: userinfo});
@@ -204,23 +276,22 @@ app.get('/update/:name', function(req, res){
 });
 
 //the user click the update button, the quartback info will get update
-app.post('/update/:name', function(req, res){
+app.post('/update/:_id', function(req, res){
 	
-	console.log("Test");
-	console.log(req.params.name);
+	console.log(req.params._id);
 
-	let info = {
+	let info = {$set:{
 		name: req.body.name,
 		age: req.body.age,
 		hometown: req.body.hometown,
 		school: req.body.school
-		};
+		}};
 
-	console.log(info);
+	db.collection('quarterbacks').findOneAndUpdate({_id: req.params._id},info, function(err, update){
 
-	db.collection('quarterbacks').update({name: req.params.name},info, function(err, update){
-
+		console.log("Update successfully");
 		res.redirect('/home');
+		
 	});
 
 

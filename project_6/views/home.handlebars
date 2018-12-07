@@ -10,18 +10,18 @@
                 <th></th>
             </tr>
 
-            {{#each info}}
+            {{#each quarterbacks}}
                 <tr align="center">
                     <td>{{name}}</td>
                     <td>{{school}}</td>
                     <td></td>
-                    <td><a href='/detail/{{name}}'>View</a></td>
+                    <td><a href='/detail/{{_id}}'>View</a></td>
                 </tr>
             {{/each}}
 
         </table>
 
-        <Button type="submit"><a href='/add'>Add a Quartback </Button>
+        <Button><a href='/addquarterback'>Add a Quartback </Button>
 
    </fieldset>
 

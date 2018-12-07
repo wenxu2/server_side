@@ -1,23 +1,23 @@
-<form method="post" action"/game/:name">
+<form method="post" action"/editgame/:gameId">
      <fieldset>
-        <h3>Add Game</h3>
-        <h4>Add a new game record for this quartback.</h4>
+        <h3>Edit Game</h3>
+        <h4>Edit game record for this quartback.</h4>
 
         <div>
             <label for="opponent">Opponent:</label>
-            <input type="text" id="opponent" name="opponent"
+            <input type="text" id="opponent" name="opponent" value="{{game.opponent}}"
                    required />
         </div>
 
         <div>
             <label for="location">Location:</label>
-            <input type="text" id="location" name="location"
+            <input type="text" id="location" name="location" value="{{game.location}}"
                    required />
         </div>
 
         <div>
             <label for="Date">Date:</label>
-            <input type="text" id="hometown" name="hometown" placeholder="mm/dd"
+            <input type="text" id="date" name="date" placeholder="mm/dd" value="{{game.date}}"
                    required />
         </div>
 
@@ -25,35 +25,36 @@
 
        <div>
             <label for="completions">Completions:</label>
-            <input type="text" id="completions" name="completions"
+            <input type="text" id="completions" name="completions" value="{{game.completions}}"
                    required />
         </div>
 
         <div>
             <label for="attempts">Attempts:</label>
-            <input type="text" id="attempts" name="attempts"
+            <input type="text" id="attempts" name="attempts" value="{{game.attempts}}"
                    required />
         </div>
 
         <div>
             <label for="yards">Yards:</label>
-            <input type="text" id="yards" name="yards"
+            <input type="text" id="yards" name="yards" value="{{game.yards}}"
                    required />
         </div>
 
         <div>
             <label for="touchdowns">Touchdowns:</label>
-            <input type="text" id="touchdowns" name="touchdowns"
+            <input type="text" id="touchdowns" name="touchdowns" value="{{game.touchdown}}"
                    required />
         </div>
 
         <div>
-            <label for="interceptions">Interceptions:</label>
-            <input type="text" id="interceptions" name="interceptions"
+            <label for="intetceptions">Interceptions:</label>
+            <input type="text" id="intetceptions" name="intetceptions" value="{{game.intetceptions}}"
                    required />
         </div>
-
-        <Button type="submit">Add Game</Button>
+        
+        <Button type="submit" class="delete">Delete</Button>
+        <Button type="submit">Update</Button>
 
    </fieldset>
 

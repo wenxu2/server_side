@@ -1,0 +1,96 @@
+<form method="post" action"/addgame/:_id">
+     <fieldset>
+        <h3>Add Game</h3>
+        <h4>Add a new game record for this quartback.</h4>
+
+        <div>
+            <label for="opponent">Opponent:</label>
+            <input type="text" id="opponent" name="opponent"
+                   required />
+        </div>
+
+        <div>
+            <label for="location">Location:</label>
+            <input type="text" id="location" name="location"
+                   required />
+        </div>
+
+        <div>
+            <label for="date">Date:</label>
+            <input type="text" id="date" name="date" placeholder="mm/dd"
+                   required />
+        </div>
+
+       <hr>
+
+       <div>
+            <label for="completions">Completions:</label>
+            <input type="text" id="completions" name="completions"
+                   required />
+        </div>
+
+        <div>
+            <label for="attempts">Attempts:</label>
+            <input type="text" id="attempts" name="attempts"
+                   required />
+        </div>
+
+        <div>
+            <label for="yards">Yards:</label>
+            <input type="text" id="yards" name="yards"
+                   required />
+        </div>
+
+        <div>
+            <label for="touchdowns">Touchdowns:</label>
+            <input type="text" id="touchdowns" name="touchdowns"
+                   required />
+        </div>
+
+        <div>
+            <label for="interceptions">Interceptions:</label>
+            <input type="text" id="interceptions" name="interceptions"
+                   required />
+        </div>
+
+        <Button type="submit">Add Game</Button>
+
+   </fieldset>
+
+    <style>
+
+        input[type=text] {
+            width: 50%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            box-sizing: border-box;
+        }
+        
+        button{
+            background-color: #008CBA;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+
+        button.delete{
+            background-color: red;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+    </style>
+</form>
+

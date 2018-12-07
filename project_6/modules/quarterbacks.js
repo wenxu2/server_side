@@ -1,19 +1,21 @@
 let mongoose = require("mongoose");
 
 let quarterbacksSchema = new mongoose.Schema({
+    _id: String,
     name: String,
     age: String,
     hometown: String,
     school: String,
     game:[{
+      gameId: String,
       opponent: String,
       location: String,
       date: String,
       completions: String,
       attempts: String,
       yards: String,
-      touchdowns: String,
-      interceptions: String,
+      touchdown: String,
+      intetceptions: String,
     }]
   });
 
