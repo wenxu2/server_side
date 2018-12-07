@@ -167,7 +167,7 @@ app.post('/addgame/:_id', function(req, res){
 	let gameId = Math.floor((Math.random() * 1000000000) + 1000000000);
 
 	let gameInfo = {
-				gameId: gameId,
+				_id: gameId,
 				opponent: req.body.opponent,
 				location: req.body.location,
 				date: req.body.date,
@@ -190,10 +190,10 @@ app.post('/addgame/:_id', function(req, res){
 });
 
 //show game
-app.get('/editgame/:gameId', function(req, res){
+app.get('/editgame/:_id', function(req, res){
 
 
-	console.log(req.params.gameId);
+	console.log(req.params._id);
 
 	console.log("The id is " + quartbackId);
 	
@@ -203,7 +203,7 @@ app.get('/editgame/:gameId', function(req, res){
 		
 		for(let i = 0; i< user.game.length; i++)
 		{
-			if(req.params.gameId == user.game[i].gameId)
+			if(req.params._id == user.game[i]._id)
 			{
 				res.render('editgame', {'game': user.game[i]});
 				break;
@@ -215,28 +215,59 @@ app.get('/editgame/:gameId', function(req, res){
 });
 
 //edit and update the game
-app.post('/editgame/:gameId', function(req, res) {
+app.post('/editgame/:_id', function(req, res) {
 			
-	console.log(req.params.gameId);
+	console.log(req.params._id);
 	console.log(quartbackId);
 
-	db.collection('quarterbacks').findOne({_id:quartbackId}, function(err, user){
-		
-		let newQuarterback = new quarterback({
-			_id: user._id,
-			name: user.name,
-			age: user.age,
-			hometown: user.hometown,
-			school: user.school,
-			game: user.game
+	let button = req.body.button;
+	console.log(button);
 
+	if(button == 'delete')
+	{
+		console.log('delete button pressed');
+		db.collection('quarterbacks').findOne({_id:quartbackId}, function(err, user){
+
+			let newQuarterback = new quarterback({
+				_id: user._id,
+				name: user.name,
+				age: user.age,
+				hometown: user.hometown,
+				school: user.school,
+				game: user.game
+
+			});
+
+			for(let i = 0; i < newQuarterback.game.length; i++)
+			{
+				
+				
+			}
+
+			console.log(newQuarterback);
 		});
+
+	}else if(button == 'update'){
+
+		res.redirect('/home');
+		console.log('Update button pressed');
+		db.collection('quarterbacks').findOne({_id:quartbackId}, function(err, user){
+			
+			let newQuarterback = new quarterback({
+				_id: user._id,
+				name: user.name,
+				age: user.age,
+				hometown: user.hometown,
+				school: user.school,
+				game: user.game
+
+			});
 
 		console.log(newQuarterback);
 
 		for(let i = 0; i< newQuarterback.game.length; i++)
 		{
-			if(req.params.gameId == newQuarterback.game[i].gameId)
+			if(req.params._id == newQuarterback.game[i]._id)
 			{
 				newQuarterback.game[i].opponent = req.body.opponent;
 				newQuarterback.game[i].location =  req.body.location;
@@ -250,37 +281,20 @@ app.post('/editgame/:gameId', function(req, res) {
 			}
 		}
 		
-		db.collection('quarterbacks').deleteOne({_id:quartbackId}).then(function(err, res){
+		db.collection('quarterbacks').deleteOne({_id: quartbackId}).then(function(err, result){
 
 			console.log(newQuarterback);
-		
-			newQuarterback.save().then(function(err, res){
-
-			if(err) return console.log(err);
-			console.log(res);
-			res.redirect('/home');
-
-			});
+			
+			newQuarterback.save();
 		});
-		
-		
-	});
-	
-	/*
-	db.collection('quarterbacks').update({_id: quartbackId, 'game.gameId': req.params.gameId},{$set:{game: info}},(err, res) => {
-
-		if(err) return console.error(err);
-
-		console.log(res);
-		console.log("Inserted Successfully");
-
-	});
-	*/
 			
-			
+		});
+	}
+
 		
-	
 });
+
+
 
 
 //show quartback info
@@ -308,14 +322,30 @@ app.post('/update/:_id', function(req, res){
 		school: req.body.school
 		}};
 
-	db.collection('quarterbacks').findOneAndUpdate({_id: req.params._id},info, function(err, update){
 
-		console.log("Update successfully");
-		res.redirect('/home');
-		
-	});
+	let button = req.body.button;
+	console.log(button);
+
+	if(button == 'delete')
+	{
+		console.log('delete button pressed');
+		db.collection('quarterbacks').deleteOne({_id: req.params._id}).then(function(){
+
+			res.redirect('/home');
+		});
 
 
+	}else if(button == 'update')
+	{
+		console.log('submit button pressed');
+
+		db.collection('quarterbacks').findOneAndUpdate({_id: req.params._id},info, function(err, update){
+
+			console.log("Update successfully");
+			res.redirect('/home');
+			
+		});
+	}
 });
 
 // 404 catch-all handler (middleware)

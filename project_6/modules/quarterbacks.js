@@ -7,7 +7,7 @@ let quarterbacksSchema = new mongoose.Schema({
     hometown: String,
     school: String,
     game:[{
-      gameId: String,
+      _id: String,
       opponent: String,
       location: String,
       date: String,
