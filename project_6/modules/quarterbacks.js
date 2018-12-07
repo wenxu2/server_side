@@ -11,11 +11,11 @@ let quarterbacksSchema = new mongoose.Schema({
       opponent: String,
       location: String,
       date: String,
-      completions: String,
-      attempts: String,
-      yards: String,
-      touchdown: String,
-      intetceptions: String,
+      completions: Number,
+      attempts: Number,
+      yards: Number,
+      touchdown: Number,
+      intetceptions: Number,
     }]
   });
 

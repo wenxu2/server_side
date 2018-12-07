@@ -36,6 +36,7 @@ db.once('open', function() {
 
 let quartbackId = 0;
 
+
 //user.js
 let user = require('./modules/user');
 //quartback.js
@@ -99,11 +100,45 @@ app.post('/signUp', function(req,res){
 //after login,
 app.get('/home', function(req,res){
 
+	let crArray = [];
+
 	db.collection('quarterbacks').find().toArray(function(err, results) {
 
 		//print out what is in the database
 		console.log(results);
-		res.render('home', {quarterbacks: results});
+		
+		for(let i = 0; i < results.length; i++)
+		{
+			let com = 0;
+			let att = 0;
+			let cr = 0;
+
+			//console.log(results[i].game);
+
+			for(let j = 0; j < results[i].game.length; j++)
+			{
+				com += results[i].game[j].completions;
+				att += results[i].game[j].attempts;
+			}
+
+			if(com == 0 && att == 0)
+			{
+				cr = 0;
+			}else{
+				cr = Math.ceil(com/att * 100);
+			}
+
+			crArray.push({
+				name: results[i].name,
+				school: results[i].school,
+				cr: cr,
+				_id:results[i]._id
+			});
+		}
+
+		console.log(crArray);
+		res.render('home', {quarterbacks: crArray});
+
 	});
 	
 });
@@ -139,15 +174,55 @@ app.get('/detail/:_id', function(req,res){
 
 	console.log(req.params._id);
 	quartbackId = req.params._id;
+	let newRecord = [];
+
+	let completions = 0;
+	let attempts = 0;
+	let cr = 0;
+	let yards = 0;
+	let tds = 0;
+	let interce = 0;
 	
 	quarterback.find({_id: req.params._id}).then(function(foundUser){
 	
-	 res.render('detail', {userinfo:foundUser[0]});
+	 
+		//console.log(foundUser[0].game);
+
+		for(let i = 0; i< foundUser[0].game.length; i++)
+		{
+			completions += foundUser[0].game[i].completions;
+			attempts += foundUser[0].game[i].attempts;
+			yards += foundUser[0].game[i].yards;
+			tds += foundUser[0].game[i].touchdown;
+			interce += foundUser[0].game[i].intetceptions;
+
+		}
+
+		console.log(completions);
+		console.log(attempts);
+		console.log(yards);
+		console.log(tds);
+		console.log(interce);
+
+		cr = Math.ceil(completions / attempts * 100);
+
+		newRecord.push({
+			completions: completions,
+			attempts: attempts,
+			cr: cr,
+			yards: yards,
+			touchdown: tds,
+			interce: interce
+		});
+
+		console.log(newRecord);
+
+
+		res.render('detail', {record: newRecord[0], userinfo:foundUser[0]});
 
 	});
 
 });
-
 
 //add game
 app.get('/addgame/:_id', function(req, res){
