@@ -124,6 +124,7 @@ app.get('/home', function(req,res){
 			if(com == 0 && att == 0)
 			{
 				cr = 0;
+
 			}else{
 				cr = Math.ceil(com/att * 100);
 			}
@@ -204,7 +205,14 @@ app.get('/detail/:_id', function(req,res){
 		console.log(tds);
 		console.log(interce);
 
-		cr = Math.ceil(completions / attempts * 100);
+			if(completions == 0 && attempts == 0)
+			{
+				cr = 0;
+				
+			}else{
+				cr = Math.ceil(completions / attempts * 100);
+			}
+
 
 		newRecord.push({
 			completions: completions,
@@ -301,7 +309,6 @@ app.post('/editgame/:_id', function(req, res) {
 	if(button == 'delete')
 	{
 		console.log('delete button pressed');
-		res.redirect('/home');
 		db.collection('quarterbacks').findOne({_id:quartbackId}, function(err, user){
 
 			let newQuarterback = new quarterback({
@@ -327,13 +334,14 @@ app.post('/editgame/:_id', function(req, res) {
 			db.collection('quarterbacks').deleteOne({_id: quartbackId}).then(function(err, result){
 
 				console.log(newQuarterback);
-				newQuarterback.save();
+				newQuarterback.save().then(function(){
+					res.redirect('/home');
+				});
 			});
 		});
 
 	}else if(button == 'update'){
 
-		res.redirect('/home');
 		console.log('Update button pressed');
 		db.collection('quarterbacks').findOne({_id:quartbackId}, function(err, user){
 			
@@ -369,7 +377,9 @@ app.post('/editgame/:_id', function(req, res) {
 
 			console.log(newQuarterback);
 			
-			newQuarterback.save();
+			newQuarterback.save().then(function(){
+				res.redirect('/home');
+			});
 		});
 			
 		});
