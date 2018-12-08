@@ -240,7 +240,7 @@ app.post('/addquarterback', function(req, res){
 app.get('/detail/:_id', function(req,res){
 
 	if(userlogin)
-		{
+	{
 		//assign quartback id
 		quartbackId = req.params._id;
 
