@@ -44,6 +44,7 @@ db.once('open', function() {
 });
 
 let quartbackId = 0;
+//check if user already login
 let userlogin = false;
 
 //user.js
@@ -141,6 +142,7 @@ app.post('/signUp', function(req,res){
 //home page, after user login
 app.get('/home', function(req,res){
 
+	//check if user already login first, if not, redirect to login
 	if(userlogin)
 	{
 		db.collection('quarterbacks').find().toArray(function(err, results) {
@@ -197,6 +199,7 @@ app.get('/home', function(req,res){
 
 //display add quartback layout 
 app.get('/addquarterback', function(req, res){
+	//check if user already login first, if not, redirect to login
 	if(userlogin)
 	{
 		res.render('addquarterback')
@@ -207,7 +210,8 @@ app.get('/addquarterback', function(req, res){
 
 //add quartback to the database
 app.post('/addquarterback', function(req, res){
-	
+
+	//check if user already login first, if not, redirect to login
 	if(userlogin)
 	{
 			
@@ -239,6 +243,7 @@ app.post('/addquarterback', function(req, res){
 //after the user click view button
 app.get('/detail/:_id', function(req,res){
 
+	//check if user already login first, if not, redirect to login
 	if(userlogin)
 	{
 		//assign quartback id
@@ -304,6 +309,7 @@ app.get('/detail/:_id', function(req,res){
 //render addgame page
 app.get('/addgame/:_id', function(req, res){
 
+	//check if user already login first, if not, redirect to login
 	if(userlogin)
 	{
 		//console.log("add game for the user");
@@ -317,6 +323,7 @@ app.get('/addgame/:_id', function(req, res){
 //add game
 app.post('/addgame/:_id', function(req, res){
 
+	//check if user already login first, if not, redirect to login
 	if(userlogin)
 	{
 		//console.log("add game for the user");
@@ -355,6 +362,7 @@ app.post('/addgame/:_id', function(req, res){
 //show game
 app.get('/editgame/:_id', function(req, res){
 
+	//check if user already login first, if not, redirect to login
 	if(userlogin)
 	{
 		//console.log(req.params._id);
@@ -382,7 +390,8 @@ app.get('/editgame/:_id', function(req, res){
 
 //edit and update the game
 app.post('/editgame/:_id', function(req, res) {
-		
+	
+	//check if user already login first, if not, redirect to login
 	if(userlogin)
 	{
 		//console.log(req.params._id);
@@ -481,6 +490,7 @@ app.post('/editgame/:_id', function(req, res) {
 //show quartback info
 app.get('/update/:_id', function(req, res){
 
+	//check if user already login first, if not, redirect to login
 	if(userlogin)
 	{
 		//console.log(req.params._id);
@@ -498,6 +508,7 @@ app.get('/update/:_id', function(req, res){
 //the user click the update button, the quartback info will get update
 app.post('/update/:_id', function(req, res){
 	
+	//check if user already login first, if not, redirect to login
 	if(userlogin)
 	{
 		//console.log(req.params._id);
