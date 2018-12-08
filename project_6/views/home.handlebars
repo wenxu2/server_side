@@ -1,0 +1,49 @@
+<form>
+     <fieldset>
+        <h3>Curent Quarterbacks</h3>
+
+        <table style="width:100%">
+            <tr>
+                <th>Fullname</th>
+                <th>School</th> 
+                <th>Comp Ratio</th>
+                <th></th>
+            </tr>
+
+            {{#each quarterbacks}}
+                <tr align="center">
+                    <td>{{name}}</td>
+                    <td>{{school}}</td>
+                    <td>{{cr}}%</td>
+                    <td><a href='/detail/{{_id}}'>View</a></td>
+                </tr>
+  
+            {{/each}}
+
+        </table>
+
+        <Button><a href='/addquarterback'>Add a Quartback </Button>
+
+   </fieldset>
+
+    <style>
+        table, th, td{
+             border: 1px solid black;
+        }  
+
+        button{
+            background-color: #008CBA;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            float: right;
+        }
+    </style>
+</form>
+

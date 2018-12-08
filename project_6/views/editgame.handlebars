@@ -1,0 +1,97 @@
+<form method="post" action"/editgame/:_id">
+     <fieldset>
+        <h3>Edit Game</h3>
+        <h4>Edit game record for this quartback.</h4>
+
+        <div>
+            <label for="opponent">Opponent:</label>
+            <input type="text" id="opponent" name="opponent" value="{{game.opponent}}"
+                   required />
+        </div>
+
+        <div>
+            <label for="location">Location:</label>
+            <input type="text" id="location" name="location" value="{{game.location}}"
+                   required />
+        </div>
+
+        <div>
+            <label for="Date">Date:</label>
+            <input type="text" id="date" name="date" placeholder="mm/dd" value="{{game.date}}"
+                   required />
+        </div>
+
+       <hr>
+
+       <div>
+            <label for="completions">Completions:</label>
+            <input type="number" id="completions" name="completions" value="{{game.completions}}"
+                   required />
+        </div>
+
+        <div>
+            <label for="attempts">Attempts:</label>
+            <input type="number" id="attempts" name="attempts" value="{{game.attempts}}"
+                   required />
+        </div>
+
+        <div>
+            <label for="yards">Yards:</label>
+            <input type="number" id="yards" name="yards" value="{{game.yards}}"
+                   required />
+        </div>
+
+        <div>
+            <label for="touchdowns">Touchdowns:</label>
+            <input type="number" id="touchdowns" name="touchdowns" value="{{game.touchdown}}"
+                   required />
+        </div>
+
+        <div>
+            <label for="intetceptions">Interceptions:</label>
+            <input type="number" id="intetceptions" name="intetceptions" value="{{game.intetceptions}}"
+                   required />
+        </div>
+
+         <Button class="delete" id="button" name='button' value="delete">Delete</Button>
+         <Button id="button" name='button' value="update">Update</Button>
+
+   </fieldset>
+
+    <style>
+
+        input{
+            width: 50%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            box-sizing: border-box;
+        }
+        
+        button{
+            background-color: #008CBA;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+
+        button.delete{
+            background-color: red;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+    </style>
+</form>
+

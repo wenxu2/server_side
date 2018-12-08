@@ -1,0 +1,91 @@
+<form>
+     <fieldset>
+       <table align="right" width="30%">
+            <tr>
+                <th>Completions</th>
+                <td>{{record.completions}}</td>
+            </tr>
+             <tr>
+                <th>Attempts</th>
+                <td>{{record.attempts}}</td>
+            </tr>
+             <tr>
+                <th>Comp Ratio</th>
+                <td>{{record.cr}}%</td>
+            </tr>
+             <tr>
+                <th>Yards</th>
+                <td>{{record.yards}}</td>
+            </tr>
+             <tr>
+                <th>TDs</th>
+                <td>{{record.touchdown}}</td>
+            </tr>
+             <tr>
+                <th>Interceptions</th>
+                <td>{{record.interce}}</td>
+            </tr>
+
+        </table>
+
+            <h2><b>{{userinfo.name}}   </b><a href="/update/{{userinfo._id}}">Edit</a></h2>
+            <p><b>Age:  </b>{{userinfo.age}}</p>
+            <p><b>Hometown:  </b>{{userinfo.hometown}}</p>
+            <p><b>School:  </b>{{userinfo.school}}</p>
+        
+        </fieldset>
+
+        <fieldset>
+        <table width="100%">
+            <tr>
+                <th>Opponent</th>
+                <th>Location</th> 
+                <th>Date</th>
+                <th> </th>
+            </tr>
+            
+            {{#each userinfo}}
+                {{#each game}}
+                    <tr align="center">
+                        <td>{{opponent}}</td>
+                        <td>{{location}}</td>
+                        <td>{{date}}</td>
+                        <td><a href='/editgame/{{_id}}'>Edit</a></td>
+                    </tr>
+                {{/each}}
+            {{/each}}
+    
+        </table>
+
+        <Button type="submit"><a href='/addgame/{{userinfo._id}}'>Add Game</a></Button>
+
+
+   </fieldset>
+
+    <style>
+        fieldset {
+            display: block;
+            border-spacing: 1px groove;
+            padding: 10px 20px;
+        }
+
+        table, th, td{
+             border: 1px solid black;
+        }  
+
+        button{
+            background-color: #008CBA;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            float: right;
+        }
+
+    </style>
+</form>

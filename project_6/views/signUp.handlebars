@@ -1,0 +1,57 @@
+
+<form method="post" action="/signUp">
+
+    <fieldset>
+        <legend><b>Sign Up</b></legend>
+    
+        <div>
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username"
+                   required />
+        </div>
+    
+        <div>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password"
+                   minlength="6" required
+                   placeholder="6 characters minimum" />
+        </div>
+
+        <Button type="submit">Submit</Button>
+
+        <p>&nbsp Already have an account?   Login <a href="/">here</a> </p>
+    
+    </fieldset>
+
+     <style>
+        
+        input[type=text] {
+            width: 50%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            box-sizing: border-box;
+        }
+
+        input[type=password] {
+            width: 50%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            box-sizing: border-box;
+        }
+        
+        button{
+            background-color: #008CBA;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            float: left;
+        }
+    </style>
+    
+</form>
