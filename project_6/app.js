@@ -58,9 +58,8 @@ app.post('/', function(req, res){
 		if(err){
 			res.redirect('/');
 			console.log(err);
-		}
-		//if user exist 
-		if(loginuser)
+		}//if user exist 
+		else if(loginuser)
 		{
 			//compare user inputs with database password
 			bcrypt.compare(req.body.password,loginuser.password, function(err, result){
@@ -74,14 +73,15 @@ app.post('/', function(req, res){
 					res.redirect('/');
 				}
 			});
-	}
+		}
 
 	});
 
 });
 
-// Login screen should display the form
+// render signUp screen
 app.get('/signUp', function(req, res) {
+	
 	res.render("signUp");
 });
 
@@ -105,7 +105,7 @@ app.post('/signUp', function(req,res){
 
 });
 
-//after login,
+//home page, after user login
 app.get('/home', function(req,res){
 
 	db.collection('quarterbacks').find().toArray(function(err, results) {
@@ -157,7 +157,6 @@ app.get('/home', function(req,res){
 	
 });
 
-
 //display add quartback layout 
 app.get('/addquarterback', function(req, res){
 	res.render('addquarterback');
@@ -166,11 +165,16 @@ app.get('/addquarterback', function(req, res){
 //add quartback to the database
 app.post('/addquarterback', function(req, res){
 	
+	//send user first name and last name as one object
 	let name = req.body.firstname + " " + req.body.lastname;
+	
+	//random generate id for user
 	let _id = Math.floor((Math.random() * 1000000000) + 1);
-	console.log(_id);
+
+	//create new quarterbacks
 	let newQuarterback = new quarterback({_id: _id, name: name, age: req.body.age, hometown: req.body.hometown, school: req.body.school});
 
+	//save new quarterback to the databse and resirect to home
 	newQuarterback.save().then(function(saved){
 		if(saved)
 		{
@@ -186,10 +190,13 @@ app.post('/addquarterback', function(req, res){
 //after the user click view button
 app.get('/detail/:_id', function(req,res){
 
-	console.log(req.params._id);
+	//assign quartback id
 	quartbackId = req.params._id;
+
+	//create array to push all sum 
 	let newRecord = [];
 
+	//add all number
 	let completions = 0;
 	let attempts = 0;
 	let cr = 0;
@@ -199,31 +206,29 @@ app.get('/detail/:_id', function(req,res){
 	
 	quarterback.find({_id: req.params._id}).then(function(foundUser){
 
+		//calculate sum for game object 
 		for(let i = 0; i< foundUser[0].game.length; i++)
 		{
-			completions += foundUser[0].game[i].completions;
-			attempts += foundUser[0].game[i].attempts;
-			yards += foundUser[0].game[i].yards;
-			tds += foundUser[0].game[i].touchdown;
-			interce += foundUser[0].game[i].intetceptions;
+
+			completions += Number(foundUser[0].game[i].completions);
+			attempts += Number(foundUser[0].game[i].attempts);
+			yards += Number(foundUser[0].game[i].yards);
+			tds += Number(foundUser[0].game[i].touchdown);
+			interce += Number(foundUser[0].game[i].intetceptions);
 
 		}
 
-		console.log(completions);
-		console.log(attempts);
-		console.log(yards);
-		console.log(tds);
-		console.log(interce);
+		//if completeions and attems equal to 0, cr equal to 0
+		if(completions == 0 && attempts == 0)
+		{
+			cr = 0;
+			
+		}else{
+			//calculate cr
+			cr = Math.ceil(completions / attempts * 100);
+		}
 
-			if(completions == 0 && attempts == 0)
-			{
-				cr = 0;
-				
-			}else{
-				cr = Math.ceil(completions / attempts * 100);
-			}
-
-
+		//push sum to array
 		newRecord.push({
 			completions: completions,
 			attempts: attempts,
@@ -233,32 +238,32 @@ app.get('/detail/:_id', function(req,res){
 			interce: interce
 		});
 
-		console.log(newRecord);
+		//console.log(newRecord);
 
-
+		//render the detail page and send in new sum array
 		res.render('detail', {record: newRecord[0], userinfo:foundUser[0]});
 
 	});
 
 });
 
-//add game
+//render addgame page
 app.get('/addgame/:_id', function(req, res){
 
-	console.log("add game for the user");
-	console.log(req.params._id);
-
+	//console.log("add game for the user");
+	//console.log(req.params._id);
 	res.render('addgame');
 });
 
 //add game
 app.post('/addgame/:_id', function(req, res){
 
-	console.log("add game for the user");
-	console.log(req.params._id);
-
+	//console.log("add game for the user");
+	//console.log(req.params._id);
+	//assign game id
 	let gameId = Math.floor((Math.random() * 1000000000) + 1000000000);
 
+	//create new game object
 	let gameInfo = {
 				_id: gameId,
 				opponent: req.body.opponent,
@@ -271,11 +276,12 @@ app.post('/addgame/:_id', function(req, res){
 				intetceptions: req.body.interceptions,
 	};
 
-
+	//find the id according to quartedback id and push game to that quarterback id
 	db.collection('quarterbacks').updateOne({_id: req.params._id},{$push: {game: gameInfo}}, function(err, records){
 		if (err) throw err;
 
-		console.log(records);
+		//console.log(records);
+		//redire user to home page
 		res.redirect('/home');
 	
 	});
@@ -286,15 +292,13 @@ app.post('/addgame/:_id', function(req, res){
 //show game
 app.get('/editgame/:_id', function(req, res){
 
-
-	console.log(req.params._id);
-
-	console.log("The id is " + quartbackId);
-	
+	//console.log(req.params._id);
+	//console.log("The id is " + quartbackId);
+	//find user accoring to quarterback id
 	db.collection('quarterbacks').findOne({_id:quartbackId}, function(err, user){
 		
 		//console.log(user.game);
-		
+		//loop through info and display the correct one
 		for(let i = 0; i< user.game.length; i++)
 		{
 			if(req.params._id == user.game[i]._id)
@@ -311,15 +315,16 @@ app.get('/editgame/:_id', function(req, res){
 //edit and update the game
 app.post('/editgame/:_id', function(req, res) {
 			
-	console.log(req.params._id);
-	console.log(quartbackId);
-
+	//console.log(req.params._id);
+	//console.log(quartbackId);
+	//assign button and button value
 	let button = req.body.button;
-	console.log(button);
-
+	//console.log(button);
+	//if delete button is pressed
 	if(button == 'delete')
 	{
-		console.log('delete button pressed');
+		//console.log('delete button pressed');
+		//delete this game from the databse
 		db.collection('quarterbacks').findOne({_id:quartbackId}, function(err, user){
 
 			let newQuarterback = new quarterback({
@@ -341,7 +346,7 @@ app.post('/editgame/:_id', function(req, res) {
 				}
 				
 			}
-
+			//save new game 
 			db.collection('quarterbacks').deleteOne({_id: quartbackId}).then(function(err, result){
 
 				console.log(newQuarterback);
@@ -353,7 +358,8 @@ app.post('/editgame/:_id', function(req, res) {
 
 	}else if(button == 'update'){
 
-		console.log('Update button pressed');
+		//console.log('Update button pressed');
+		//Update new game
 		db.collection('quarterbacks').findOne({_id:quartbackId}, function(err, user){
 			
 			let newQuarterback = new quarterback({
@@ -366,7 +372,7 @@ app.post('/editgame/:_id', function(req, res) {
 
 			});
 
-		console.log(newQuarterback);
+		//console.log(newQuarterback);
 
 		for(let i = 0; i< newQuarterback.game.length; i++)
 		{
@@ -383,10 +389,10 @@ app.post('/editgame/:_id', function(req, res) {
 				break;
 			}
 		}
-		
+		//save game to the databse and redirect to home 
 		db.collection('quarterbacks').deleteOne({_id: quartbackId}).then(function(err, result){
 
-			console.log(newQuarterback);
+			//console.log(newQuarterback);
 			
 			newQuarterback.save().then(function(){
 				res.redirect('/home');
@@ -402,11 +408,10 @@ app.post('/editgame/:_id', function(req, res) {
 //show quartback info
 app.get('/update/:_id', function(req, res){
 
-	console.log(req.params._id);
+	//console.log(req.params._id);
 	quarterback.findOne({_id: req.params._id}).exec(function(err, userinfo){
 		if(err) throw err;
-		//else
-		console.log(userinfo);
+		//console.log(userinfo);
 		res.render('update',{userinfo: userinfo});
 	});
 
@@ -415,8 +420,8 @@ app.get('/update/:_id', function(req, res){
 //the user click the update button, the quartback info will get update
 app.post('/update/:_id', function(req, res){
 	
-	console.log(req.params._id);
-
+	//console.log(req.params._id);
+	//set new info for quarterback
 	let info = {$set:{
 		name: req.body.name,
 		age: req.body.age,
@@ -424,22 +429,24 @@ app.post('/update/:_id', function(req, res){
 		school: req.body.school
 		}};
 
-
+	//assign button and button value
 	let button = req.body.button;
 	console.log(button);
 
+	//if delete button is pressed, delete quarterback 
 	if(button == 'delete')
 	{
 		console.log('delete button pressed');
 		db.collection('quarterbacks').deleteOne({_id: req.params._id}).then(function(){
 
 			res.redirect('/home');
+
 		});
 
-
+	//if update button is pressed, update quarterback info
 	}else if(button == 'update')
 	{
-		console.log('submit button pressed');
+		//console.log('submit button pressed');
 
 		db.collection('quarterbacks').findOneAndUpdate({_id: req.params._id},info, function(err, update){
 
