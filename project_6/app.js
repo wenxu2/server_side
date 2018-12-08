@@ -36,7 +36,6 @@ db.once('open', function() {
 
 let quartbackId = 0;
 
-
 //user.js
 let user = require('./modules/user');
 //quartback.js
@@ -44,6 +43,7 @@ let quarterback = require('./modules/quarterbacks');
 
 // Login screen should display the form
 app.get('/', function(req, res) {
+
 	// Render the login screen.  Any problem passed into the query string will be available to the template.
 	res.render("login", {problem: req.query.problem});
 });
@@ -51,22 +51,30 @@ app.get('/', function(req, res) {
 //Authericate user
 app.post('/', function(req, res){
 
+	//find username in the database
 	user.findOne({username: req.body.username}).exec(function(err, loginuser){
-
-			if(loginuser)
-			{
-				console.log(loginuser.password);
-				console.log(req.body.password);
-				
-				bcrypt.compare(req.body.password,loginuser.password, function(err, result){
-				
-					if(result === true)
-					{
-						console.log("User login successfully");
-						res.redirect('/home');
-					}
-				});
+		
+		//if user doesn't exist, redirect to login 
+		if(err){
+			res.redirect('/');
+			console.log(err);
 		}
+		//if user exist 
+		if(loginuser)
+		{
+			//compare user inputs with database password
+			bcrypt.compare(req.body.password,loginuser.password, function(err, result){
+			
+				if(result === true)
+				{
+					console.log("User login successfully");
+					res.redirect('/home');
+				}else{
+					
+					res.redirect('/');
+				}
+			});
+	}
 
 	});
 
@@ -88,8 +96,8 @@ app.post('/signUp', function(req,res){
 		let newUser = new user({username: req.body.username, password: hash});
 
 		newUser.save().then(function(saveUser){
-			//console.log(saveUser.username);
-			res.redirect('/home');
+			//redirect the user to login page
+			res.redirect('/');
 		
 		});
 
@@ -104,33 +112,36 @@ app.get('/home', function(req,res){
 
 		//print out what is in the database
 		console.log(results);
+
+		//declat array to pass to handlebars
 		let crArray = [];
 
+		//loop throught the database and calculate user comp ratio
 		for(let i = 0; i < results.length; i++)
 		{
 			let com = 0;
 			let att = 0;
 			let cr = 0;
 
-			//console.log(results[i].game);
-
 			for(let j = 0; j < results[i].game.length; j++)
 			{
-				com += results[i].game[j].completions;
-				att += results[i].game[j].attempts;
-
-				console.log(com + " " + att);
+				com += Number(results[i].game[j].completions);
+				att += Number(results[i].game[j].attempts);
+				
 			}
 
+			//if both number equal to 0, push 0 to the array
 			if(com == 0 && att == 0)
 			{
 				cr = 0;
 
 			}else{
+				//calculate percentage
 				cr = Math.ceil(com / att * 100);
 				console.log(cr);
 			}
 
+			//push info to array
 			crArray.push({
 				name: results[i].name,
 				school: results[i].school,
@@ -139,7 +150,7 @@ app.get('/home', function(req,res){
 			});
 		}
 
-		console.log(crArray);
+		//render selcted quarter detail page
 		res.render('home', {quarterbacks: crArray});
 
 	});
@@ -187,9 +198,6 @@ app.get('/detail/:_id', function(req,res){
 	let interce = 0;
 	
 	quarterback.find({_id: req.params._id}).then(function(foundUser){
-	
-	 
-		//console.log(foundUser[0].game);
 
 		for(let i = 0; i< foundUser[0].game.length; i++)
 		{
